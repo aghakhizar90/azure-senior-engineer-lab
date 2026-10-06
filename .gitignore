@@ -1,0 +1,23 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+crash.log
+crash.*.log
+
+# Terraform lock file - KEEP THIS
+# .terraform.lock.hcl should be committed
+
+# Azure / local credentials
+.azure/
+*.pem
+*.key
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
