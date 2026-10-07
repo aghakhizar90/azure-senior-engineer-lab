@@ -46,3 +46,24 @@ module "key_vault" {
   private_endpoint_subnet_id = module.networking.private_endpoint_subnet_id
   private_dns_zone_id        = module.private_dns.private_dns_zone_id
 }
+
+module "aks" {
+  source = "../../modules/aks"
+
+  resource_group_name = module.resource_group.name
+  location            = module.resource_group.location
+
+  cluster_name = "aks-azure-sr-lab-dev"
+  dns_prefix   = "aks-azure-sr-lab-dev"
+
+  subnet_id = module.networking.aks_subnet_id
+
+  node_count = 1
+  vm_size    = "Standard_D2s_v4"
+
+  tags = {
+    Environment = var.environment
+    Project     = "azure-senior-engineer-lab"
+    ManagedBy   = "Terraform"
+  }
+}
