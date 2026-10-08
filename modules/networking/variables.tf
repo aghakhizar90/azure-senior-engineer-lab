@@ -32,3 +32,13 @@ variable "private_endpoint_subnet_cidr" {
   description = "CIDR range for Private Endpoint subnet"
   type        = string
 }
+
+variable "azure_firewall_subnet_cidr" {
+  description = "CIDR range for Azure Firewall subnet"
+  type        = string
+}
+
+variable "azure_firewall_management_subnet_cidr" {
+  description = "CIDR range for Azure Firewall management subnet"
+  type        = string
+}

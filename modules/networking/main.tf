@@ -53,6 +53,21 @@ resource "azurerm_network_security_group" "app_gateway" {
   }
 }
 
+resource "azurerm_network_security_rule" "app_gateway_gateway_manager" {
+  name                       = "Allow-GatewayManager"
+  priority                   = 100
+  direction                  = "Inbound"
+  access                     = "Allow"
+  protocol                   = "Tcp"
+  source_port_range          = "*"
+  destination_port_ranges    = ["65200-65535"]
+  source_address_prefix      = "GatewayManager"
+  destination_address_prefix = "*"
+
+  resource_group_name         = var.resource_group_name
+  network_security_group_name = azurerm_network_security_group.app_gateway.name
+}
+
 resource "azurerm_network_security_group" "private_endpoint" {
   name                = "nsg-private-endpoints"
   location            = var.location
@@ -77,4 +92,18 @@ resource "azurerm_subnet_network_security_group_association" "app_gateway" {
 resource "azurerm_subnet_network_security_group_association" "private_endpoint" {
   subnet_id                 = azurerm_subnet.private_endpoint.id
   network_security_group_id = azurerm_network_security_group.private_endpoint.id
+}
+
+resource "azurerm_subnet" "azure_firewall" {
+  name                 = "AzureFirewallSubnet"
+  resource_group_name  = var.resource_group_name
+  virtual_network_name = azurerm_virtual_network.this.name
+  address_prefixes     = [var.azure_firewall_subnet_cidr]
+}
+
+resource "azurerm_subnet" "azure_firewall_management" {
+  name                 = "AzureFirewallManagementSubnet"
+  resource_group_name  = var.resource_group_name
+  virtual_network_name = azurerm_virtual_network.this.name
+  address_prefixes     = [var.azure_firewall_management_subnet_cidr]
 }

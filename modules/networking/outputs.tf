@@ -22,3 +22,13 @@ output "private_endpoint_subnet_id" {
   description = "Private Endpoint subnet resource ID"
   value       = azurerm_subnet.private_endpoint.id
 }
+
+output "azure_firewall_subnet_id" {
+  description = "Azure Firewall subnet resource ID"
+  value       = azurerm_subnet.azure_firewall.id
+}
+
+output "azure_firewall_management_subnet_id" {
+  description = "Azure Firewall management subnet resource ID"
+  value       = azurerm_subnet.azure_firewall_management.id
+}
